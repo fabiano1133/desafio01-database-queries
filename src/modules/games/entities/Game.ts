@@ -5,17 +5,21 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from "typeorm";
+import { Genre } from "../../genres/entities/Genre";
 
-import { User } from '../../users/entities/User';
+import { User } from "../../users/entities/User";
 
-@Entity('games')
+@Entity("games")
 export class Game {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
   title: string;
+
+  @ManyToMany(() => Genre, (genre) => genre.games)
+  genres: Genre[];
 
   @ManyToMany(() => User, (user) => user.games)
   users: User[];
